@@ -1,0 +1,38 @@
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #304146;
+  color: #fff;
+  padding: 20px;
+}
+
+.footer-section {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.footer-section h3 {
+  font-size: 1.2em;
+}
+
+.footer-section p {
+  font-size: 1em;
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 8px;
+}
+
+.footer-section a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+}

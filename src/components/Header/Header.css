@@ -1,0 +1,82 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #1d2225;
+  color: white;
+  z-index: 2;
+}
+
+.logo-container {
+  flex: 1;
+}
+
+.logo {
+  width: 50px;
+  border-radius: 3px;
+}
+
+.search-container {
+  flex: 2;
+}
+
+.search-bar {
+  border: 1px solid #7e7e7e;
+  background-color: transparent;
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  height: 40px;
+  width: 90%;
+  line-height: 40px;
+  outline: 0;
+  padding: 0 15px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+}
+
+.search-bar:hover {
+  border-color: #409eff;
+}
+
+
+.nav-links {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.user-container {
+  flex: 1;
+  text-align: right;
+  margin-right: 2.5rem;
+}
+
+.user-photo {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.is-in-queue {
+  position: relative;
+  display: inline-block;
+  /* margin-top: -1rem; */
+}
+
+.is-in-queue a {
+  display: inline-block;
+  text-decoration: none;
+  color: rgb(255, 111, 111); /* Text color */
+  position: absolute; /* Set to relative to position the text inside the star */
+  /* padding-left: 0.5em; */
+}

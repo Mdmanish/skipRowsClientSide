@@ -1,0 +1,150 @@
+body {
+  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+}
+
+.video-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  /* max-width: 1200px; */
+  margin: 3.8rem auto 2rem auto;
+}
+
+.heading {
+  text-align: center;
+  background-color: #3b424c;
+  margin: 0;
+  padding: 0;
+}
+
+.heading h1 {
+  font-size: 2.5em;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.heading h1:hover {
+  color: #12f0e1;
+  transition: color 0.3s ease-in-out;
+}
+
+.salon-box {
+  background-color: #c9d0c8;
+  text-align: center;
+  margin-bottom: 20px;
+  /* clip-path: polygon(0 0 , 0 70%,100% 100%, 100% 0); */
+  z-index: 1;
+}
+
+.salon-box-innner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.salon-box-innner-left {
+  flex: 1;
+}
+
+.salon-box-innner-middle {
+  flex: 2;
+}
+
+.salon-box-innner-right {
+  flex: 1;
+}
+
+.salon-box h2 {
+  color: #020202;
+}
+
+.salon-box img {
+  width: 70%;
+  height: auto;
+}
+
+.services {
+  margin: 0 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #ffffffb9;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  background-color: #0e0e0e;
+  color: white;
+}
+
+tr {
+  transition: background-color 0.3s;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.total {
+  margin: 0 2rem;
+}
+
+.submit-button {
+  margin: 0 4rem;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  background-color: #eb3c3c;
+  color: white;
+  padding: 10px 40px;
+  margin-right: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
