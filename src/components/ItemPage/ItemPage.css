@@ -55,6 +55,25 @@ video {
   z-index: 1;
 }
 
+.queue-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  margin-top: 1.5rem;
+}
+
+.queue {
+  background-color: #0442c1;
+  color: white;
+  padding: 5px 30px;
+  border: none;
+  border-radius: 10px;
+}
+
+.queue:hover {
+  box-shadow: 0 0 10px rgba(105,105,105, 0.969);
+}
+
 .salon-box-innner {
   display: flex;
   flex-direction: row;
@@ -147,4 +166,11 @@ button {
 
 button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.cancel-booking {
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
 }

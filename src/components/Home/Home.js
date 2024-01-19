@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { fetchData } from '../../services/actions.js';
+import { setBookingDetails } from "../../Store/Actions/bookingAction.js";
+import { setUserDetails } from "../../Store/Actions/userAction.js";
+import { setMainDetails } from "../../Store/Actions/mainAction.js";
 import './Home.css';
 import salonImg from '../../assets/img/salon1.jpeg';
 
@@ -27,28 +31,41 @@ class Home extends Component {
         super(props);
         this.state = {
           data: '',
-          username: '',
+          // username: '',
           isInQueue: 0,
+          queueSize: 0,
+          waitingTime: "0:0",
+          bookedSalonId: null,
         };
     }
 
     componentDidMount() {
       const user_name = Cookies.get('username');
-      this.setState({ username: user_name });
+      this.props.setUserDetails(user_name);
+
+      this.props.setMainDetails({ salonId: 1 });
+
       const data = {'username': user_name};
+      console.log("data:", data);
       fetchData('', data).then((res) => {
-        console.log("res:",res.data.data);
-        this.setState({ data:res.data.data, isInQueue: res.data.slots ?? 0 });
+        console.log("res in:",res.data.data);
+        this.setState({
+          data:res.data.data,
+          isInQueue: res.data.slots ?? 0,
+          queueSize: res.data.queue_size ?? 0,
+          waitingTime: res.data.waiting_time ?? "0:0",
+          bookedSalonId: res.data.salon_id ?? null
+        }, () => this.props.setBookingDetails({bookedSalonId: this.state.bookedSalonId}));
       }).catch((err) => {
         console.log("error is:", err)
       });
     }
 
     render() {
-        const {data, isInQueue} = this.state;
+        const {data, isInQueue, queueSize, waitingTime, bookedSalonId} = this.state;
         return (
             <div>
-              <Header isInQueue={isInQueue}/>
+              <Header isInQueue={isInQueue} queueSize={queueSize} waitingTime={waitingTime} bookedSalonId={bookedSalonId} />
               <div className="box-container">
                 {Object.keys(data).map((key) => (
                 <Box
@@ -65,4 +82,30 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    userName : state.userReducer.userName
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserDetails: (userName) => dispatch(
+      setUserDetails({
+        userName: userName
+      })
+      ),
+    setBookingDetails: (data) => dispatch(
+      setBookingDetails({
+        salonId: data.bookedSalonId
+      })
+    ),
+    setMainDetails: (data) => dispatch(
+      setMainDetails({
+        salonId: data.salonId
+      })
+    )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

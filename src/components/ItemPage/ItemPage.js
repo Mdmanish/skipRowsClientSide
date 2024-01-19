@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { operationOnTimes } from '../Helper.js';
@@ -20,6 +21,8 @@ class ItemPage extends Component {
         totalAmount: 0,
         showConfirmPopup: false,
         showInfoPopup: false,
+        showConfirmCancelPopup: false,
+        isCancelled: false,
       };
     }
 
@@ -82,9 +85,27 @@ class ItemPage extends Component {
     this.clearCheckBoxes();
   };
 
+  handleCancelBooking = () => {
+    this.setState({ showConfirmCancelPopup: false });
+    const {salonId} = this.state;
+    const {userName} = this.props;
+    const data = {
+      userName: userName,
+      salonId: salonId,
+    }
+    postBooking(`cancel/${salonId}`, data).then((res) => {
+      console.log("res:",res);
+      this.setState({ isCancelled: true });
+    }).catch((err) => {
+      console.log("error is:", err);
+    });
+  }
+
   componentDidMount() {
-    const id = window.location.href.split('/')[4];
+    // const { id } = this.props.location.state || {};
+    const id = parseInt(window.location.href.split('/')[4]);
     this.setState({ salonId: id });
+    console.log("id:", this.props.id);
 
     fetchData(`book/${id}`).then((res) => {
       console.log("res:",res);
@@ -94,9 +115,12 @@ class ItemPage extends Component {
     });
   }
   render() {
-    const {data, selectedRows, totalExpectedTime, totalAmount} = this.state;
+    const {data, selectedRows, totalExpectedTime, totalAmount, salonId, isCancelled} = this.state;
+    // const id = parseInt(window.location.href.split('/')[4]);
+    // console.log("id:", id);
     let confirmMessage = null;
     let infoMessage = null;
+    let cancelPopup = null;
 
     if (this.state.showInfoPopup) {
       infoMessage = (
@@ -119,10 +143,21 @@ class ItemPage extends Component {
         />
       );
     }
+    if (this.state.showConfirmCancelPopup) {
+      cancelPopup = (
+        <ConfirmPopup
+          title="Confirm Cancellation"
+          message="Do you confirm you want to cancel your booking?"
+          submitHandler={this.handleCancelBooking}
+          closeWarningPopup={() => this.setState({ showConfirmCancelPopup: false })}
+        />
+      )
+    }
     return (
       <>
       {confirmMessage}
       {infoMessage}
+      {cancelPopup}
       <div>
         <Header/>
         {/* <div className="video-background">
@@ -136,7 +171,17 @@ class ItemPage extends Component {
             <h1>Book Your Slot</h1>
           </div>
           <div className='salon-box'>
-            <h2>{`Number of people in the queue is: ${ data.queue_size } and expected time to complete it: ${ data.expected_time }hr`}</h2>
+            <div className="queue-container">
+              <div className="queue">
+                <p>Number of people in the queue is: { data.queue_size }</p>
+              </div>
+              <div className="queue">
+                <p>Expected time to complete it &asymp; { data.expected_time }</p>
+              </div>
+              {this.props.bookedSalonId === salonId && !isCancelled && (
+                <button className="cancel-booking" onClick={() => {this.setState({ showConfirmCancelPopup: true });}}>Cancel booking</button>
+              )}
+            </div>
             <div className='salon-box-innner'>
               <div className='salon-box-innner-left'>
                 <h2>{data.salon?.name}</h2>
@@ -207,4 +252,12 @@ class ItemPage extends Component {
   }
 }
 
-export default ItemPage;
+const mapStateToProps = (state) => {
+  return {
+    bookedSalonId: state.bookingReducer.salonId,
+    salonId: state.mainReducer.salonId,
+    userName: state.userReducer.userName
+  }
+}
+
+export default connect(mapStateToProps)(ItemPage);

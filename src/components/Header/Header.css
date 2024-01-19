@@ -62,21 +62,39 @@
   margin-right: 2.5rem;
 }
 
+.login a {
+  color: #fff;
+}
+
 .user-photo {
   width: 40px;
   border-radius: 50%;
 }
 
+.is-in-queue-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  
+}
+
 .is-in-queue {
-  position: relative;
-  display: inline-block;
-  /* margin-top: -1rem; */
+  background-color: #eb3c3c;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+.is-in-queue:hover {
+  box-shadow: 0 0 10px rgba(251, 243, 2, 0.969);
 }
 
 .is-in-queue a {
-  display: inline-block;
   text-decoration: none;
-  color: rgb(255, 111, 111); /* Text color */
-  position: absolute; /* Set to relative to position the text inside the star */
-  /* padding-left: 0.5em; */
+  cursor: pointer;
+}
+
+.is-in-queue p {
+  margin: 0;
 }
