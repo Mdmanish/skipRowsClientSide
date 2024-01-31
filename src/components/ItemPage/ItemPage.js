@@ -6,9 +6,7 @@ import Footer from "../Footer/Footer";
 import { operationOnTimes } from '../Helper.js';
 import { fetchData, postBooking } from '../../services/actions.js';
 import './ItemPage.css';
-import salonImg from '../../assets/img/salon1.jpeg';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup.js';
-// import background_video from '../../assets/background_video.mp4';
 
 class ItemPage extends Component {
     constructor(props) {
@@ -190,7 +188,7 @@ class ItemPage extends Component {
                 <p>Mobile no: {data.salon?.mobile}</p>
               </div>
               <div className='salon-box-innner-middle'>
-                <img src={salonImg} alt={data.salon?.name} />
+                <img src={data.salon?.image_url} alt={data.salon?.name} />
               </div>
               <div className='salon-box-innner-right'>
                 <a href={data.salon?.location_link}>click here to see on google map</a>

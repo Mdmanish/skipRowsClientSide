@@ -9,7 +9,6 @@ import { setBookingDetails } from "../../Store/Actions/bookingAction.js";
 import { setUserDetails } from "../../Store/Actions/userAction.js";
 import { setMainDetails } from "../../Store/Actions/mainAction.js";
 import './Home.css';
-import salonImg from '../../assets/img/salon1.jpeg';
 
 class Box extends Component {
     render() {
@@ -72,7 +71,7 @@ class Home extends Component {
                     id={data[key].id}
                     title={data[key].name}
                     description={data[key].description}
-                    image={salonImg}
+                    image={data[key].image_url}
                 />
                 ))}
               </div>
