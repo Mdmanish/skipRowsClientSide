@@ -19,7 +19,9 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="logo-container">
-          <img src={logoImage} alt="Website Logo" className="logo" />
+          <Link to="/" className="link">
+            <img src={logoImage} alt="Website Logo" className="logo" />
+          </Link>
         </div>
         <div className="search-container">
           <input type="text" placeholder="Search..." className="search-bar" />

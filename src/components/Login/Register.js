@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { postBooking } from '../../services/actions.js';
 import './login.css';
 
@@ -44,7 +45,7 @@ class Register extends Component {
       email,
     }).then((res) => {
       if (res.status === 200) {
-        window.location.href = '/';
+        window.location.href = '/login';
         this.setState({ registerError: '' });
       } else {
         this.setState({ registerError: 'Something went wrong!' });
@@ -94,6 +95,12 @@ class Register extends Component {
           <button type="button" onClick={this.handleSubmit}>
             Submit
           </button>
+          <p>
+              Already have account? Click here to {' '}
+              <Link to="/login" className="link">
+                Login
+              </Link>
+            </p>
         </div>
       </div>
     )

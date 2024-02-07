@@ -12,13 +12,14 @@ import './Home.css';
 
 class Box extends Component {
     render() {
-      const { title, description, image, id } = this.props;
+      const { title, description, image, id, distance_to_user } = this.props;
       return (
         <div className="box">
           <Link to={{ pathname: `/item_page/${id}`, state: { id:id } }}>
             <img src={image} alt={title} />
           </Link>
           <h2>{title}</h2>
+          <h4>Distance: {parseInt(distance_to_user)}m</h4>
           <p>{description}</p>
         </div>
       );
@@ -35,17 +36,11 @@ class Home extends Component {
           queueSize: 0,
           waitingTime: "0:0",
           bookedSalonId: null,
+          location: null,
         };
     }
 
-    componentDidMount() {
-      const user_name = Cookies.get('username');
-      this.props.setUserDetails(user_name);
-
-      this.props.setMainDetails({ salonId: 1 });
-
-      const data = {'username': user_name};
-      console.log("data:", data);
+    fetchDataFunc = (data = null) => {
       fetchData('', data).then((res) => {
         console.log("res in:",res.data.data);
         this.setState({
@@ -60,6 +55,33 @@ class Home extends Component {
       });
     }
 
+    componentDidMount() {
+      const user_name = Cookies.get('username');
+      let data = {username: user_name};
+
+      if (navigator.geolocation) {
+        // Use the Geolocation API to get the current position
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            this.setState({ location: { latitude, longitude } }, () => {
+              data = { ...data, location: this.state.location };
+              console.log('data', data);
+              this.fetchDataFunc(data);
+            });
+          },
+          (error) => {
+            console.error('Error getting location:', error.message);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by your browser');
+      }
+
+      this.props.setUserDetails(user_name);
+      this.props.setMainDetails({ salonId: 1 });
+    }
+
     render() {
         const {data, isInQueue, queueSize, waitingTime, bookedSalonId} = this.state;
         return (
@@ -72,6 +94,7 @@ class Home extends Component {
                     title={data[key].name}
                     description={data[key].description}
                     image={data[key].image_url}
+                    distance_to_user={data[key].distance_to_user}
                 />
                 ))}
               </div>
