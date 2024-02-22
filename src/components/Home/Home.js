@@ -19,7 +19,7 @@ class Box extends Component {
             <img src={image} alt={title} />
           </Link>
           <h2>{title}</h2>
-          <h4>Distance: {parseInt(distance_to_user)}m</h4>
+          {distance_to_user && <h4>Distance: {parseInt(distance_to_user)}m</h4>}
           <p>{description}</p>
         </div>
       );
@@ -53,6 +53,12 @@ class Home extends Component {
       }).catch((err) => {
         console.log("error is:", err)
       });
+    }
+
+    componentWillMount() {
+      const user_name = Cookies.get('username');
+      let data = {username: user_name};
+      this.fetchDataFunc(data);
     }
 
     componentDidMount() {
