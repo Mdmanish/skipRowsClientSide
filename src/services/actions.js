@@ -9,9 +9,12 @@ import axios from 'axios';
 //   'X-CSRFToken': csrftoken,
 // };
 
+// const BASE_URL = 'http://127.0.0.1:8000/';
+const BASE_URL = 'https://skiprows.onrender.com/';
+
 export const fetchData = (api, data = null) => {
   return new Promise((resolve, reject) => {
-    axios.get('http://127.0.0.1:8000/' + api, {params: data})
+    axios.get(BASE_URL + api, {params: data})
       .then((response) => {
         resolve(response);
       })
@@ -23,7 +26,7 @@ export const fetchData = (api, data = null) => {
 
 export const postBooking = (api, data) => {
   return new Promise((resolve, reject) => {
-    axios.post('http://127.0.0.1:8000/' + api, data)
+    axios.post(BASE_URL + api, data)
       .then((response) => {
         resolve(response);
       })
